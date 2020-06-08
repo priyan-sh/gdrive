@@ -141,4 +141,4 @@ if (len(sys.argv) > 2):
         date = datetime.datetime.now().strftime("%d %B, %Y (%A) at %I:%M %p")
         print(e)
 else:
-    print('''Error: You forgot to pass the arguments, choose either 'clean' or 'backup'. Pass the token file location as the second argument. Specify the directory you want to backup as the third argument. If you chose 'clean', it will clear all backups. You don't need to pass any directory as an argument, just the token is enough.''')
+    print('''Error: You forgot to pass the arguments, choose either 'clean' or 'backup'. Pass the token file location as the second argument. Specify the directory you want to backup as the third argument. If you chose 'clean', it will clear all backups. You don't need to pass any directory as an argument, just the token file location.''')
