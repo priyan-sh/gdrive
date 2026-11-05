@@ -372,8 +372,8 @@ G.risks = (t) => {
 G.svc = (t) => {
   const g = t.g; let b = '';
   const cx = 240, cy = 160, Rx = 176, Ry = 118;
-  const em = ['👩‍⚕️', '🧬', '✨', '🥗', '💨', '☁️', '🧪', '🩻'];
-  const dashed = [4, 5];
+  const em = ['👩‍⚕️', '🧬', '✨', '🥗', '💨', '☁️', '🌿', '🧪'];
+  const dashed = [4, 5, 6];
   const pts = [];
   for (let i = 0; i < 8; i++) {
     const a = ((-90 + i * 45) * Math.PI) / 180;
@@ -420,6 +420,8 @@ G.cover = (t) => {
   b += `<circle cx="540" cy="30" r="190" fill="${C.PKT}"/><circle cx="20" cy="470" r="120" fill="${C.PT}" opacity=".7"/>`;
   b += `<image href="${logo}" x="26" y="28" width="330" height="130"/>`;
   b += rr(40, 196, dev ? 150 : 140, 30, 15, C.PK) + T(c.kicker, dev ? 115 : 110, 216, { size: 12, w: 700, fill: C.W });
+  const w1 = dev ? 150 : 140, w2 = Math.round(c.kicker2.length * (dev ? 10.5 : 8.6) + 34);
+  b += rr(40 + w1 + 10, 196, w2, 30, 15, '#fff', C.P, 2) + T(c.kicker2, 40 + w1 + 10 + w2 / 2, 216, { size: 12, w: 700, fill: C.P });
   b += T(c.title1, 40, 278, { size: dev ? 30 : 32, w: 600, fill: C.LP, anchor: 'start' });
   b += T(c.title2, 38, dev ? 346 : 352, { size: dev ? 56 : 66, w: 700, fill: C.P, anchor: 'start' });
   b += T(wrap(c.sub, 15, 400), 40, 392, { size: 15, w: 400, fill: C.GREY, anchor: 'start' });
@@ -439,6 +441,46 @@ G.cover = (t) => {
   b += `<path d="M0,742 C140,718 300,758 560,724 L560,794 L0,794 Z" fill="url(#band)"/>`;
   b += T(t.tagline, 280, 772, { size: 17, w: 500, fill: C.W, italic: true });
   return svg(560, 794, b, defs);
+};
+
+
+// ---- spectrum PCOM -> PCOD -> PCOS = PMOS (new page)
+G.spectrum = (t) => {
+  const g = t.g.spec; let b = '';
+  const fills = ['#F29BAA', '#D8629E', C.P, C.LP];
+  const W = 108, GAP = 14, x0 = 6;
+  const defs = `<linearGradient id="sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.PK}"/><stop offset="1" stop-color="${C.LP}"/></linearGradient>`;
+  for (let i = 0; i < 4; i++) {
+    const x = x0 + i * (W + GAP), cx = x + W / 2, dark = i === 0 ? C.INK : '#fff';
+    b += rr(x, 6, W, 92, 16, fills[i]);
+    b += T(g.names[i], cx, 42, { size: 24, w: 700, fill: dark });
+    b += T(g.sub[i], cx, 66, { size: 11.5, w: 500, fill: dark, lh: 1.2 });
+  }
+  const ex = x0 + 3 * (W + GAP) - GAP / 2;
+  b += `<circle cx="${ex}" cy="52" r="13" fill="#fff" stroke="${C.P}" stroke-width="2"/>` + T('=', ex, 58, { size: 18, w: 700, fill: C.P });
+  b += `<rect x="6" y="112" width="468" height="11" rx="5.5" fill="url(#sg)"/><path d="M468,106 L482,117.5 L468,129 Z" fill="${C.LP}"/>`;
+  b += T(g.milder, 8, 146, { size: 11.5, w: 600, fill: C.GREY, anchor: 'start' }) + T(g.complex, 470, 146, { size: 11.5, w: 600, fill: C.GREY, anchor: 'end' });
+  return svg(488, 154, b, defs);
+};
+
+// ---- 5-phase eating roadmap (new page): compact timeline
+G.roadmap = (t) => {
+  const g = t.g.road, tl = t.g; let b = '';
+  const fills = ['#E5849A', '#D8629E', C.P, C.LP, '#4B3C70'];
+  const W = 90, GAP = 7, x0 = 1;
+  for (let i = 0; i < 5; i++) {
+    const x = x0 + i * (W + GAP), cx = x + W / 2;
+    b += rr(x, 0, W, 78, 14, fills[i]);
+    b += T(g.phase + ' ' + (i + 1), cx, 17, { size: 10, w: 700, fill: '#FBDDEB' });
+    const nm = g.names[i].split('\n');
+    b += T(nm, cx, nm.length > 1 ? 36 : 42, { size: 13, w: 700, fill: '#fff', lh: 1.15 });
+    b += T(g.times[i], cx, 68, { size: 10.5, w: 500, fill: '#fff' });
+  }
+  const px = (i) => x0 + i * (W + GAP);
+  const bracket = (xa, xb, y, label, col) => `<path d="M${xa},${y - 6} L${xa},${y} L${xb},${y} L${xb},${y - 6}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round"/>` + T(label, (xa + xb) / 2, y + 17, { size: 11.5, w: 700, fill: col });
+  b += bracket(px(0), px(2) + W, 96, tl.tl3, C.P);
+  b += bracket(px(0), px(4) + W, 138, tl.tl6, C.LP);
+  return svg(480, 164, b);
 };
 
 // ---- BACK page decoration (transparent, page-size)

@@ -128,20 +128,20 @@ const pages = [];
     const r = [];
     [c.toc[i], c.toc[i + 1]].forEach((e, j) => {
       const fill = (i / 2) % 2 ? col.W : col.PKT;
-      r.push(cell(P(e[0], { size: 9, bold: true, color: col.P, after: 0, align: AlignmentType.CENTER, line: 260 }), { w: w[j * 2], fill, margins: { top: 45, bottom: 45, left: 40, right: 40 } }));
-      r.push(cell(P(e[1], { size: 8.3, after: 0, line: HI ? 300 : 250 }), { w: w[j * 2 + 1], fill, margins: { top: 45, bottom: 45, left: 60, right: 80 } }));
+      r.push(cell(P(e[0], { size: 9, bold: true, color: col.P, after: 0, align: AlignmentType.CENTER, line: 260 }), { w: w[j * 2], fill, margins: { top: 28, bottom: 28, left: 40, right: 40 } }));
+      r.push(cell(P(e[1], { size: 8.1, after: 0, line: HI ? 290 : 240 }), { w: w[j * 2 + 1], fill, margins: { top: 28, bottom: 28, left: 60, right: 80 } }));
     });
     rows.push(r);
   }
   pages.push([
-    titleBar(c), sp(120),
-    P(c.lead, { size: 10, after: 90, boldColor: col.P }),
+    titleBar(c), sp(90),
+    P(c.lead, { size: 9.2, after: 60, boldColor: col.P }),
     H(c.howTitle, { size: 10.5 }),
     ...c.how.map((x) => bullet(x, { boldColor: col.P })),
-    sp(60),
-    callout(c.teenTitle, c.teen, { color: col.LP, fill: col.LT }),
-    sp(110),
-    H(c.tocTitle, { size: 10.5 }),
+    sp(50),
+    callout(c.teenTitle, c.teen, { color: col.LP, fill: col.LT, size: 8.3 }),
+    sp(70),
+    H(c.tocTitle, { size: 10, after: 30 }),
     table(rows, w),
   ]);
 }
@@ -150,17 +150,35 @@ const pages = [];
 {
   const c = t.p3;
   const cmp = table(c.cmpRows.map((r, i) => [
-    cell(P(r[0], { size: 11, bold: true, color: col.W, align: AlignmentType.CENTER, after: 0 }), { w: 1100, fill: i ? col.LP : col.P, borders: gap(), margins: { top: 80, bottom: 80, left: 60, right: 60 } }),
-    cell(P(r[1], { size: 8.8, after: 0 }), { w: CW - 1100, fill: i ? col.LT : col.PT, borders: gap() }),
-  ]), [1100, CW - 1100]);
+    cell(P(r[0], { size: 10, bold: true, color: col.W, align: AlignmentType.CENTER, after: 0 }), { w: 1000, fill: ['E5849A', 'D8629E', col.P, col.LP][i], borders: gap(), margins: { top: 55, bottom: 55, left: 50, right: 50 } }),
+    cell(P(r[1], { size: 8.3, after: 0, line: HI ? 300 : 250 }), { w: CW - 1000, fill: i % 2 ? col.LT : col.PT, borders: gap(), margins: { top: 55, bottom: 55, left: 120, right: 100 } }),
+  ]), [1000, CW - 1000]);
   pages.push([
-    titleBar(c), sp(90), img('ovary', 320, { after: 20 }),
+    titleBar(c), sp(90), img('ovary', 310, { after: 10 }),
     P(c.intro, { size: 9, boldColor: col.P, after: 80 }),
     callout(c.callTitle, c.call),
     sp(50), H(c.cmpTitle, { size: 10 }), cmp,
-    P(c.cmpNote, { size: 8.8, before: 70, after: 60, boldColor: col.P }),
     H(c.factsTitle, { size: 10, before: 30 }),
     ...c.facts.map((x) => bullet(x, { boldColor: col.P })),
+  ]);
+}
+
+// ---- Spectrum & new name
+{
+  const c = t.pSpec; const w = [800, 3811, 2500];
+  const fills = ['E5849A', 'D8629E', col.P, col.LP];
+  const head = c.heads.map((h, i) => cell(P(h, { size: 8.4, bold: true, color: col.W, after: 0, line: 250 }), { w: w[i], fill: '3D3260', borders: gap(), margins: { top: 65, bottom: 65, left: 100, right: 80 } }));
+  const rows = c.rows.map((r, k) => [
+    cell(P(r[0], { size: 9, bold: true, color: col.W, align: AlignmentType.CENTER, after: 0, line: 260 }), { w: w[0], fill: fills[k], borders: gap(), margins: { top: 60, bottom: 60, left: 30, right: 30 } }),
+    cell(P(r[1], { size: 7.9, after: 0, line: HI ? 285 : 238 }), { w: w[1], fill: k % 2 ? col.LT : col.PT, borders: gap(), margins: { top: 60, bottom: 60, left: 100, right: 90 } }),
+    cell(P(r[2], { size: 7.9, bold: true, color: col.P, after: 0, line: HI ? 285 : 238 }), { w: w[2], fill: k % 2 ? col.LT : col.PT, borders: gap(), margins: { top: 60, bottom: 60, left: 100, right: 90 } }),
+  ]);
+  pages.push([
+    titleBar(c), sp(90),
+    P(c.intro, { size: 9, after: 40, boldColor: col.P }),
+    img('spectrum', 400, { after: 40 }),
+    table([head, ...rows], w), sp(70),
+    callout(c.callTitle, c.call, { size: 8.2 }),
   ]);
 }
 
@@ -343,10 +361,29 @@ const pages = [];
   pages.push([
     titleBar(c), sp(100),
     P(c.intro, { size: 9, after: 30 }),
-    img('plate', 450, { after: 80 }),
+    img('plate', 400, { after: 60 }),
     table([[mk(c.moreTitle, c.more, col.G, col.GT, 'bulg', 0), mk(c.lessTitle, c.less, col.R, col.RT, 'bulr', 1)]], w2), sp(90),
     H(c.habitsTitle, { size: 10 }),
     ...c.habits.map((x) => bullet(x, { size: 8.6, after: 30 })),
+  ]);
+}
+
+// ---- 5-phase eating roadmap
+{
+  const c = t.pRoad; const w = [900, CW - 900 - 780, 780];
+  const fills = ['E5849A', 'D8629E', col.P, col.LP, '4B3C70'];
+  const head = c.heads.map((h, i) => cell(P(h, { size: 7.6, bold: true, color: col.W, after: 0, line: 240, align: i === 1 ? AlignmentType.LEFT : AlignmentType.CENTER }), { w: w[i], fill: '3D3260', borders: gap(), margins: { top: 55, bottom: 55, left: 80, right: 80 } }));
+  const rows = c.rows.map((r, k) => [
+    cell([P(r[0], { size: 8.4, bold: true, color: col.W, align: AlignmentType.CENTER, after: 0, line: 240 }), P(r[1], { size: 7.3, color: 'FBEAF3', align: AlignmentType.CENTER, after: 0, line: 230 })], { w: w[0], fill: fills[k], borders: gap(), margins: { top: 50, bottom: 50, left: 30, right: 30 } }),
+    cell(P(`**${r[2]}.** ${r[3]}`, { size: 7.8, after: 0, boldColor: fills[k], line: HI ? 280 : 232 }), { w: w[1], fill: k % 2 ? col.LT : col.PT, borders: gap(), margins: { top: 40, bottom: 40, left: 100, right: 90 } }),
+    cell(P(r[4], { size: 8, bold: true, color: col.P, align: AlignmentType.CENTER, after: 0, line: 240 }), { w: w[2], fill: k % 2 ? col.LT : col.PT, borders: gap(), margins: { top: 50, bottom: 50, left: 40, right: 40 } }),
+  ]);
+  pages.push([
+    titleBar(c), sp(80),
+    P(c.intro, { size: 8.4, after: 30 }),
+    img('roadmap', 340, { after: 16 }),
+    table([head, ...rows], w), sp(40),
+    callout(null, `**${c.seedTitle}:** ${c.seed}`, { color: col.LP, fill: col.LT, size: 7.7 }),
   ]);
 }
 
@@ -374,7 +411,7 @@ const pages = [];
 {
   const c = t.p16; const w = [2450, CW - 2450];
   const head = c.heads.map((h, i) => cell(P(h, { size: 8.6, bold: true, color: col.W, after: 0 }), { w: w[i], fill: col.LP, borders: gap(), margins: { top: 80, bottom: 80, left: 120, right: 100 } }));
-  const rows = c.rows.map((r, k) => r.map((x, i) => cell(P(x, { size: 8.3, bold: i === 0, color: i === 0 ? col.P : col.INK, after: 0, line: HI ? 300 : 250 }), { w: w[i], fill: k % 2 ? col.LT : col.PT, borders: gap(), margins: { top: 60, bottom: 60, left: 120, right: 100 } })));
+  const rows = c.rows.map((r, k) => r.map((x, i) => cell(P(x, { size: 8.3, bold: i === 0, color: i === 0 ? col.P : col.INK, after: 0, line: HI ? 300 : 250 }), { w: w[i], fill: k % 2 ? col.LT : col.PT, borders: gap(), margins: { top: 45, bottom: 45, left: 120, right: 100 } })));
   const wf = [1650, CW - 1650];
   const fertRows = c.fertRows.map((r, k) => [
     cell(P(r[0], { size: 8.4, bold: true, color: col.W, align: AlignmentType.CENTER, after: 0, line: HI ? 290 : 240 }), { w: wf[0], fill: k % 2 ? col.LP : col.P, borders: gap(), margins: { top: 60, bottom: 60, left: 50, right: 50 } }),
@@ -383,11 +420,40 @@ const pages = [];
   pages.push([
     titleBar(c), sp(90),
     P(c.intro, { size: 9, after: 40, boldColor: col.P }),
-    img('ladder', 300, { after: 40 }),
-    table([head, ...rows], w), sp(70),
+    img('ladder', 340, { after: 30 }),
+    ...c.rows.map((r) => bullet(`**${r[0]}:** ${r[1]}`, { size: 8.4, after: 35, boldColor: col.P })), sp(60),
     H(c.fertTitle, { size: 10, after: 40 }),
     table(fertRows, wf), sp(70),
     callout(null, c.note, { color: col.LP, fill: col.LT }),
+  ]);
+}
+
+// ---- How we treat each symptom (2 pages)
+function howCard(g, labels, color, tint) {
+  const wl = 1250, w = [wl, CW - wl];
+  const rows = [[cell(P(g.title, { size: 8.8, bold: true, color: col.W, after: 0, line: HI ? 290 : 255 }), { w: CW, span: 2, fill: color, borders: gap(), margins: { top: 70, bottom: 70, left: 130, right: 100 } })]];
+  g.rows.forEach(([k, txt]) => rows.push([
+    cell(P(labels[k], { size: 7.6, bold: true, color, after: 0, line: 235 }), { w: wl, fill: tint, borders: gap(), margins: { top: 45, bottom: 45, left: 110, right: 60 } }),
+    cell(P(txt, { size: 7.7, after: 0, line: HI ? 280 : 232 }), { w: w[1], fill: col.W, borders: gap(tint, 12), margins: { top: 45, bottom: 45, left: 110, right: 90 } }),
+  ]));
+  return table(rows, w);
+}
+{
+  const c = t.pHow1; const hc = [col.P, col.LP, 'D8629E', col.P, col.LP];
+  pages.push([
+    titleBar(c), sp(90),
+    P(c.intro, { size: 9, after: 70, boldColor: col.P }),
+    howCard(c.groups[0], c.labels, hc[0], col.PT), sp(110),
+    howCard(c.groups[1], c.labels, hc[1], col.LT), sp(110),
+    callout(null, c.note, { color: col.LP, fill: col.LT }),
+  ]);
+  const d = t.pHow2;
+  pages.push([
+    titleBar(d), sp(90),
+    howCard(d.groups[0], c.labels, 'D8629E', col.PKT), sp(90),
+    howCard(d.groups[1], c.labels, col.LP, col.LT), sp(90),
+    howCard(d.groups[2], c.labels, col.P, col.PT), sp(70),
+    P(d.note, { size: 7.8, color: col.GREY, italics: true, align: AlignmentType.CENTER, after: 0 }),
   ]);
 }
 
@@ -594,7 +660,7 @@ const body = [];
 pages.forEach((pg, i) => { if (i) body.push(pageStart()); body.push(...pg); });
 
 const doc = new Document({
-  creator: 'PCOD Xpert by Hope', title: HI ? 'PCOD और PCOS के बारे में सब कुछ' : 'Everything About PCOD & PCOS', description: 'Patient education booklet',
+  creator: 'PCOD Xpert by Hope', title: HI ? 'PCOD, PCOS और PMOS के बारे में सब कुछ' : 'Everything About PCOD, PCOS & PMOS', description: 'Patient education booklet',
   fonts: [
     { name: REG, data: fs.readFileSync(path.join(ROOT, 'assets/fonts/Poppins_400Regular.ttf')) },
     { name: SEMI, data: fs.readFileSync(path.join(ROOT, 'assets/fonts/Poppins_600SemiBold.ttf')) },

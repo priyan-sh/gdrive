@@ -1,6 +1,6 @@
 # PCOD Xpert Patient Booklet
 
-A5, 24-page patient education booklet in English and Hindi.
+A5, 28-page patient education booklet in English and Hindi.
 
 ## Files (in `output/`)
 - `PCOD_Xpert_Patient_Booklet_EN.docx` / `.pdf`
@@ -19,4 +19,4 @@ src/make.sh en            # builds EN docx + PDF
 src/make.sh hi            # builds HI docx + PDF
 ```
 
-Placeholders to fill before printing: the patient stories page (page 23).
+Placeholders to fill before printing: the patient stories page (page 27).
