@@ -20,3 +20,9 @@ src/make.sh hi            # builds HI docx + PDF
 ```
 
 Placeholders to fill before printing: the patient stories page (page 27).
+
+## Patient folder (physical file folder)
+`node src/build_folder.js` builds three PDFs in `output/`:
+- `PCOD_Xpert_Patient_Folder_PRINT_A3_bleed.pdf`: 2 pages, A3 sheet (426 x 303 mm with 3 mm bleed). Page 1 = outside (back | front), page 2 = inside (pages | pocket). Folds to A4.
+- `PCOD_Xpert_Patient_Folder_PREVIEW_with_guides.pdf`: same with trim, fold, fastener-hole and pocket die-cut guides and crop marks (not for printing).
+- `PCOD_Xpert_Patient_Folder_4_panels_A4.pdf`: front, inside left, inside right, back as separate A4 pages for sharing.
